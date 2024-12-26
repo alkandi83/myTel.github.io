@@ -111,6 +111,21 @@
 
         console.log("Offer створено. Скопіюйте та передайте це іншій стороні:");
         document.getElementById('signalingData').value = JSON.stringify(peerConnection.localDescription);
+
+        // Копіювання тексту в буфер обміну
+        const signalingData = document.getElementById('signalingData');
+        signalingData.select();
+        document.execCommand('copy'); // Для підтримки старих браузерів
+
+        // Для нових браузерів з API Clipboard
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(signalingData.value).then(() => {
+                console.log("Текст скопійовано в буфер обміну.");
+            }).catch((err) => {
+                console.error("Помилка копіювання в буфер обміну: ", err);
+            });
+        }
+
         document.getElementById('answerCall').disabled = false; // Активуємо кнопку для прийняття дзвінка
     };
 
