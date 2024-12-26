@@ -30,8 +30,12 @@
             text-align: center;
         }
         button {
-            width: 100%;
+            width: 48%;
             margin-top: 10px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
         }
     </style>
 </head>
@@ -41,8 +45,10 @@
     <h1>Аудіо-дзвінок</h1>
     <div class="card">
         <div class="card-body">
-            <button id="startCall" class="btn btn-primary btn-lg">Розпочати дзвінок</button>
-            <button id="answerCall" class="btn btn-success btn-lg" disabled>Прийняти дзвінок</button>
+            <div class="button-container">
+                <button id="startCall" class="btn btn-primary btn-lg">Розпочати дзвінок</button>
+                <button id="answerCall" class="btn btn-success btn-lg" disabled>Прийняти дзвінок</button>
+            </div>
             <div class="textarea-container">
                 <textarea id="signalingData" rows="5" class="form-control" placeholder="Скопіюйте/вставте дані сюди"></textarea>
             </div>
@@ -50,7 +56,7 @@
     </div>
     <div class="audio-container">
         <p>Вхідний аудіо-стрім:</p>
-        <audio id="remoteAudio" controls autoplay></audio>
+        <audio id="remoteAudio" autoplay></audio>
     </div>
 </div>
 
@@ -114,6 +120,9 @@
         console.log("Вхідний аудіо-стрім отримано.");
         const remoteAudio = document.getElementById('remoteAudio');
         remoteAudio.srcObject = event.streams[0];
+        // Встановлення максимальної гучності без регулятора
+        remoteAudio.volume = 1;
+        remoteAudio.controls = false; // Прибираємо регулятор гучності
     };
 
     // Логи для перевірки стану з'єднання
